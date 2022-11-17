@@ -1,0 +1,16 @@
+{
+    "customerId": "7a77ed0adcb9422c98b28bdd5a928346",
+    "orderItems": [
+        {
+            "itemId": "af05604ded564544ba81d9213d76787f",
+            "price": 20.0,
+            "quantity": 2
+        },
+        {
+            "itemId": "f030fdd1-3af8-444a-b5c8-3fe1828a9fdf",
+            "price": 33.75,
+            "quantity": 1
+        }
+    ],
+    "orderTotal": 73.75
+}

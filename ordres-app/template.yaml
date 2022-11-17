@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  customers-app
+
+  Sample SAM Template for orders-app
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  OrdersFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Policies:
+      - Statement:
+        - Sid: LambdaPublishToSns
+          Effect: Allow
+          Action:
+            - sns:Publish
+          Resource: 'arn:aws:sns:eu-west-1:133548157508:food-delivery'
+      Environment:
+        Variables:
+          TargetSnsTopicArn: 'arn:aws:sns:eu-west-1:133548157508:food-delivery'
+      Events:
+        PostOrder:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /order
+            Method: post
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  FoodDeliveryApi:
+    Description: "API Gateway endpoint URL for Prod stage for orders function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/order/"
+  OrdersFunction:
+    Description: "Orders Function ARN"
+    Value: !GetAtt OrdersFunction.Arn
+  # OrdersFunctionIamRole:
+  #   Description: "Implicit IAM Role created for Orders function"
+  #   Value: !GetAtt OrdersFunctionIamRole.Arn

@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "orders"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1rwc7wduj6u7"
+s3_prefix = "orders"
+region = "eu-west-1"
+profile = "yahoo-awscli"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
